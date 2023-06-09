@@ -60,6 +60,8 @@ executionTime = timedelta(seconds=end_time - start_time)
 
 print(f"--- {executionTime} to train {model_name} ---\n")
 
+model.save(f'{model_name}.h5')
+
 print(f"\n--- Evaluating {model_name} ---\n")
 
 start_time = time.monotonic()
@@ -111,13 +113,11 @@ print(f"--- {executionTime} to get classification report from {model_name} ---\n
 # Step 6: Print and save the confusion matrix
 cm_output = "Confusion Matrix:\n" + str(confusion_matrix)
 print(cm_output)
-with open('confusion_matrix.txt', 'w') as f:
+with open(f'confusion_matrix_{model_name}.txt', 'w') as f:
     print(cm_output, file=f)
 
 # Step 7: Print and save the classification report
 report_output = "Classification Report:\n" + report
 print(report_output)
-with open('classification_report.txt', 'w') as f:
+with open(f'classification_report_{model_name}.txt', 'w') as f:
     print(report_output, file=f)
-
-model.save(f'{model_name}.h5')

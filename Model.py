@@ -3,7 +3,7 @@ import os
 from keras import backend as K, Input
 from tensorflow import keras
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 
@@ -13,9 +13,17 @@ def getModel(decay_steps, model_name, categories=2, initial_learning_rate=1e-3):
 
     LSTM = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(128, return_sequences=True))(model_input)
 
-    LSTM2 = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(64, return_sequences=False))(LSTM)
+    LSTM1 = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(128, return_sequences=True))(LSTM)
 
-    model_output = keras.layers.Dense(categories, activation='softmax')(LSTM2)
+    LSTM2 = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(128, return_sequences=True))(LSTM1)
+
+    # LSTM3 = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(128, return_sequences=True))(LSTM2)
+
+    # LSTM4 = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(128, return_sequences=True))(LSTM3)
+
+    LSTM_output = keras.layers.lstm = keras.layers.Bidirectional(keras.layers.LSTM(128, return_sequences=False))(LSTM1)
+
+    model_output = keras.layers.Dense(categories, activation='softmax')(LSTM_output)
 
     model = keras.models.Model(model_input, model_output)
 
